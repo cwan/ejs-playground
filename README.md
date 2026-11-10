@@ -2,6 +2,8 @@
 
 ブラウザ上で [EJS](https://ejs.co/) テンプレートを試せる静的Webアプリです。GitHub Pages でそのまま公開できます。
 
+**▶ 公開ページ: https://cwan.github.io/ejs-playground/**
+
 ![screenshot](docs/screenshot.png)
 
 ## 機能
