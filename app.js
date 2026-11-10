@@ -54,6 +54,10 @@
   var outTextEl = $('out-text');
   var statusEl = $('status');
 
+  var COLLAPSE_KEY = 'ejs-playground:params-collapsed';
+  var panesEl = document.querySelector('.panes');
+  var toggleParamsEl = $('btn-toggle-params');
+
   var currentView = 'html';
   var lastOutput = '';
 
@@ -333,6 +337,29 @@
     saveDraftSoon();
   }
 
+  // ---------- パラメーター領域の折りたたみ ----------
+  function setParamsCollapsed(collapsed) {
+    panesEl.classList.toggle('params-collapsed', collapsed);
+    toggleParamsEl.setAttribute('aria-expanded', String(!collapsed));
+    toggleParamsEl.title = collapsed ? 'パラメーターを展開' : 'パラメーターを折りたたむ';
+    try { localStorage.setItem(COLLAPSE_KEY, collapsed ? '1' : '0'); } catch (e) { /* ignore */ }
+  }
+
+  toggleParamsEl.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var collapsed = !panesEl.classList.contains('params-collapsed');
+    setParamsCollapsed(collapsed);
+    if (!collapsed) paramsEl.focus();
+  });
+
+  // 折りたたみ時は領域のどこをクリックしても展開
+  $('pane-params').addEventListener('click', function () {
+    if (panesEl.classList.contains('params-collapsed')) {
+      setParamsCollapsed(false);
+      paramsEl.focus();
+    }
+  });
+
   // ---------- events ----------
   $('btn-preview').addEventListener('click', preview);
   $('btn-download').addEventListener('click', download);
@@ -381,5 +408,6 @@
   applyState(draft || { params: DEFAULT_PARAMS, template: DEFAULT_TEMPLATE });
   refreshSavedList();
   updateOutputView();
+  setParamsCollapsed(localStorage.getItem(COLLAPSE_KEY) === '1');
   preview();
 })();
