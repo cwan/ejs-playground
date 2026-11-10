@@ -164,23 +164,9 @@
     return data;
   }
 
-  // include('保存名') で保存済みテンプレートを読み込めるようにする
-  function includer(originalPath) {
-    var saves = readSaves();
-    var key = Object.prototype.hasOwnProperty.call(saves, originalPath) ? originalPath
-      : Object.prototype.hasOwnProperty.call(saves, originalPath.replace(/\.ejs$/, '')) ? originalPath.replace(/\.ejs$/, '')
-      : null;
-    if (key === null) {
-      throw new Error('include: 保存名 "' + originalPath + '" のテンプレートが見つかりません。');
-    }
-    // 空文字だと EJS がファイル読み込みにフォールバックするため、空白1文字にする
-    return { template: saves[key].template || ' ', filename: key };
-  }
-
   function render() {
     var data = parseParams();
     return ejs.render(templateEl.value, data, {
-      includer: includer,
       rmWhitespace: rmwsEl.checked
     });
   }

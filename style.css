@@ -224,13 +224,6 @@ pre.output {
   font-size: 12px;
 }
 
-.status code {
-  font-family: var(--mono);
-  background: #eef1f5;
-  padding: 0 4px;
-  border-radius: 3px;
-}
-
 /* ---------- collapsible parameter pane ---------- */
 #pane-params .pane-head h2 { margin-right: auto; }
 
