@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EJS Playground</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="toolbar">
+    <h1>EJS Playground</h1>
+
+    <div class="group" aria-label="保存・読み込み">
+      <input id="save-name" type="text" placeholder="保存名" list="saved-names" autocomplete="off">
+      <datalist id="saved-names"></datalist>
+      <button id="btn-save" type="button" title="現在のパラメーターとテンプレートを名前をつけて保存">保存</button>
+      <select id="saved-list" title="保存済みデータ">
+        <option value="">— 保存済みを選択 —</option>
+      </select>
+      <button id="btn-load" type="button">読み込み</button>
+      <button id="btn-delete" type="button" class="danger">削除</button>
+      <button id="btn-new" type="button" title="入力内容をクリア">新規</button>
+    </div>
+
+    <div class="group" aria-label="実行">
+      <button id="btn-preview" type="button" class="primary" title="Ctrl+Enter / ⌘+Enter">プレビュー</button>
+      <input id="file-name" type="text" value="output.html" title="ダウンロードファイル名">
+      <button id="btn-download" type="button">ダウンロード</button>
+    </div>
+  </header>
+
+  <main class="panes">
+    <section class="pane" id="pane-params">
+      <div class="pane-head">
+        <h2>パラメーター <small>(JSON)</small></h2>
+        <button id="btn-format" type="button" class="small" title="JSONを整形">整形</button>
+      </div>
+      <textarea id="params" spellcheck="false" aria-label="パラメーター入力"></textarea>
+    </section>
+
+    <section class="pane" id="pane-template">
+      <div class="pane-head">
+        <h2>テンプレート <small>(EJS)</small></h2>
+        <label class="small-label"><input id="opt-rmws" type="checkbox"> rmWhitespace</label>
+      </div>
+      <textarea id="template" spellcheck="false" aria-label="テンプレート入力"></textarea>
+    </section>
+
+    <section class="pane" id="pane-output">
+      <div class="pane-head">
+        <h2>結果 <small>(プレビュー)</small></h2>
+        <div class="tabs" role="tablist">
+          <button type="button" role="tab" data-view="html" class="tab active">HTML表示</button>
+          <button type="button" role="tab" data-view="text" class="tab">テキスト表示</button>
+        </div>
+      </div>
+      <div id="error" class="error" hidden></div>
+      <iframe id="out-html" class="output" title="HTMLプレビュー" sandbox="allow-scripts allow-popups allow-modals"></iframe>
+      <pre id="out-text" class="output" hidden></pre>
+    </section>
+  </main>
+
+  <footer class="status">
+    <span id="status"></span>
+    <span class="hint">保存データはこのブラウザのローカルストレージに保存されます。<code>include('保存名')</code> で他の保存済みテンプレートを読み込めます。</span>
+  </footer>
+
+  <script src="vendor/ejs.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
