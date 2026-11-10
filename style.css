@@ -212,16 +212,20 @@ pre.output {
 
 [hidden] { display: none !important; }
 
-/* ---------- status bar ---------- */
-.status {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 4px 12px;
-  border-top: 1px solid var(--border);
-  background: var(--panel);
-  color: var(--muted);
-  font-size: 12px;
+/* ---------- toast ---------- */
+.toast {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 10;
+  max-width: calc(100% - 32px);
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: rgba(31, 35, 40, 0.88);
+  color: #fff;
+  font-size: 13px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 }
 
 /* ---------- collapsible parameter pane ---------- */
@@ -293,5 +297,4 @@ button.toggle {
     padding-left: 0;
     border-left: 0;
   }
-  .status { flex-direction: column; }
 }

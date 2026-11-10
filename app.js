@@ -133,8 +133,9 @@
   var statusTimer = null;
   function setStatus(msg) {
     statusEl.textContent = msg;
+    statusEl.hidden = false;
     clearTimeout(statusTimer);
-    statusTimer = setTimeout(function () { statusEl.textContent = ''; }, 4000);
+    statusTimer = setTimeout(function () { statusEl.hidden = true; }, 3000);
   }
 
   function showError(msg) {
@@ -179,13 +180,13 @@
     });
   }
 
-  function preview() {
+  function preview(silent) {
     try {
       lastOutput = render();
       clearError();
       outHtmlEl.srcdoc = lastOutput;
       outTextEl.textContent = lastOutput;
-      setStatus('プレビューを更新しました (' + lastOutput.length.toLocaleString() + ' 文字)');
+      if (silent !== true) setStatus('プレビューを更新しました (' + lastOutput.length.toLocaleString() + ' 文字)');
       return true;
     } catch (e) {
       showError(e && e.message ? e.message : String(e));
@@ -347,7 +348,7 @@
   });
 
   // ---------- events ----------
-  $('btn-preview').addEventListener('click', preview);
+  $('btn-preview').addEventListener('click', function () { preview(); });
   $('btn-download').addEventListener('click', download);
   $('btn-save').addEventListener('click', save);
   $('btn-load').addEventListener('click', load);
@@ -395,5 +396,5 @@
   refreshSavedList();
   updateOutputView();
   setParamsCollapsed(localStorage.getItem(COLLAPSE_KEY) === '1');
-  preview();
+  preview(true);
 })();
