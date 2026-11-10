@@ -4,15 +4,20 @@
   var STORAGE_KEY = 'ejs-playground:saves';   // 名前付き保存データ
   var DRAFT_KEY = 'ejs-playground:draft';     // 編集中の内容 (自動保存)
 
-  var DEFAULT_PARAMS = JSON.stringify({
-    title: 'EJS Playground',
-    user: { name: '山田 太郎' },
-    items: [
-      { name: 'りんご', price: 120 },
-      { name: 'バナナ', price: 98 },
-      { name: 'みかん', price: 150 }
-    ]
-  }, null, 2);
+  var DEFAULT_PARAMS = [
+    '# パラメーターは YAML で記述します (JSON も可)',
+    'title: EJS Playground',
+    'user:',
+    '  name: 山田 太郎',
+    'items:',
+    '  - name: りんご',
+    '    price: 120',
+    '  - name: バナナ',
+    '    price: 98',
+    '  - name: みかん',
+    '    price: 150',
+    ''
+  ].join('\n');
 
   var DEFAULT_TEMPLATE = [
     '<!DOCTYPE html>',
@@ -140,16 +145,17 @@
 
   // ---------- rendering ----------
   function parseParams() {
-    var src = paramsEl.value.trim();
-    if (!src) return {};
+    var src = paramsEl.value;
+    if (!src.trim()) return {};
     var data;
     try {
-      data = JSON.parse(src);
+      data = jsyaml.load(src);
     } catch (e) {
-      throw new Error('パラメーターのJSONが不正です:\n' + e.message);
+      throw new Error('パラメーターのYAMLが不正です:\n' + e.message);
     }
-    if (data === null || typeof data !== 'object' || Array.isArray(data)) {
-      throw new Error('パラメーターはJSONオブジェクト ({ ... }) で指定してください。');
+    if (data == null) return {}; // コメントのみ等
+    if (typeof data !== 'object' || Array.isArray(data)) {
+      throw new Error('パラメーターはキーと値の形式 (例: "title: Hello") で指定してください。');
     }
     return data;
   }
@@ -282,7 +288,7 @@
 
   function newDoc() {
     if (!confirm('パラメーターとテンプレートをクリアしますか？\n(保存済みデータは削除されません)')) return;
-    applyState({ params: '{\n  \n}', template: '', fileName: 'output.html', rmWhitespace: false });
+    applyState({ params: '', template: '', fileName: 'output.html', rmWhitespace: false });
     saveNameEl.value = '';
     savedListEl.value = '';
     lastOutput = '';
@@ -295,7 +301,7 @@
   function formatParams() {
     try {
       var data = parseParams();
-      paramsEl.value = JSON.stringify(data, null, 2);
+      paramsEl.value = jsyaml.dump(data, { indent: 2, lineWidth: -1 });
       clearError();
       saveDraftSoon();
     } catch (e) {

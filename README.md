@@ -6,7 +6,7 @@
 
 ## 機能
 
-- **パラメーター入力** (JSON) / **テンプレート入力** (EJS) / **結果出力** の3ペイン構成
+- **パラメーター入力** (YAML。JSONも可) / **テンプレート入力** (EJS) / **結果出力** の3ペイン構成
 - 「プレビュー」(Ctrl/⌘+Enter) で変換結果を表示 (HTML表示 / テキスト表示 を切替)
 - 「ダウンロード」で変換結果をファイル保存 (ファイル名は任意、拡張子からMIMEタイプを判定)
 - パラメーターとテンプレートを **名前をつけて複数保存** (ローカルストレージ)
@@ -21,6 +21,7 @@ index.html        画面
 style.css         スタイル
 app.js            アプリ本体
 vendor/ejs.min.js EJS 3.1.10 ブラウザ版 (Apache-2.0, vendor/EJS-LICENSE)
+vendor/js-yaml.min.js js-yaml 4.3.2 (MIT, vendor/JS-YAML-LICENSE)
 .nojekyll         GitHub Pages の Jekyll 処理を無効化
 ```
 

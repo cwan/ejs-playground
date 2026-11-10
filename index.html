@@ -32,8 +32,8 @@
   <main class="panes">
     <section class="pane" id="pane-params">
       <div class="pane-head">
-        <h2>パラメーター <small>(JSON)</small></h2>
-        <button id="btn-format" type="button" class="small" title="JSONを整形">整形</button>
+        <h2>パラメーター <small>(YAML / JSON)</small></h2>
+        <button id="btn-format" type="button" class="small" title="YAMLとして整形">整形</button>
       </div>
       <textarea id="params" spellcheck="false" aria-label="パラメーター入力"></textarea>
     </section>
@@ -66,6 +66,7 @@
   </footer>
 
   <script src="vendor/ejs.min.js"></script>
+  <script src="vendor/js-yaml.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
